@@ -30,6 +30,8 @@ class _TodoPageState extends State<TodoPage> {
       _textController.text,
       false,
     );
+
+    _textController.text = '';
   }
 
   @override
@@ -91,7 +93,30 @@ class _TodoPageState extends State<TodoPage> {
                     itemBuilder: (context, index) {
                       return Dismissible(
                         key: UniqueKey(),
-                        direction: DismissDirection.endToStart,
+                        direction: DismissDirection.startToEnd,
+                        confirmDismiss: (_) {
+                          return showDialog<bool>(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: const Text('Tem certeza?'),
+                              content: const Text('Quer remover essa tarefa?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop(false);
+                                  },
+                                  child: const Text('Não'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop(true);
+                                  },
+                                  child: const Text('Sim'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                         onDismissed: (_) {
                           Provider.of<TodoController>(
                             context,
@@ -105,7 +130,7 @@ class _TodoPageState extends State<TodoPage> {
                             color: Colors.white,
                             size: 40,
                           ),
-                          alignment: Alignment.centerRight,
+                          alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.only(right: 16),
                           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         ),
@@ -118,13 +143,12 @@ class _TodoPageState extends State<TodoPage> {
                                   : TextDecoration.none,
                             ),
                           ),
-                          secondary: //const Icon(
-                              //   Icons.error_outlined,
-                              //   color: AppTheme.pink,
-                              // ),
-                              IconButton(
+                          secondary: IconButton(
                             onPressed: () {},
-                            icon: Icon(Icons.delete),
+                            icon: Icon(
+                              task.itemByIndex(index).check == false ? Icons.error_outlined : Icons.check_circle,
+                              color: AppTheme.pink,
+                            ),
                           ),
                           value: task.itemByIndex(index).check,
                           onChanged: (value) {
@@ -137,7 +161,8 @@ class _TodoPageState extends State<TodoPage> {
                           activeColor: AppTheme.pink,
                         ),
                       );
-                    }),
+                    },
+                  ),
           ),
         ),
       ],

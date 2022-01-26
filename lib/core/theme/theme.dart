@@ -31,7 +31,16 @@ class AppTheme {
       color: pink,
       elevation: 0,
     ),
-    unselectedWidgetColor: pink,
+    checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateColor.resolveWith(
+        (states) {
+          if (states.contains(MaterialState.selected)) {
+            return pink; // ;the color when checkbox is selected;
+          }
+          return pink; //the color when checkbox is unselected;
+        },
+      ),
+    ),
     fontFamily: 'Poppins',
   );
 }
