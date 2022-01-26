@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imc_calculator/core/theme/theme.dart';
-import 'package:imc_calculator/screens/profile/profile_page.dart';
-
+import 'package:imc_calculator/screens/home/widgets/todo_page.dart';
 import 'widgets/form_calculate_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -51,7 +50,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.symmetric(horizontal: 46),
             child: FormCalculateWidget(),
           ),
-          ProfilePage(),
+          TodoPage(),
         ],
         onPageChanged: setCurrentPage,
       ),

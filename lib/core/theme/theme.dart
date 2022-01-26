@@ -31,6 +31,7 @@ class AppTheme {
       color: pink,
       elevation: 0,
     ),
+    unselectedWidgetColor: pink,
     fontFamily: 'Poppins',
   );
 }
